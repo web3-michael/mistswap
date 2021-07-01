@@ -264,13 +264,6 @@ const config: HardhatUserConfig = {
       tags: ["staging"],
       gasMultiplier: 2,
     },
-    celo: {
-      url: "https://forno.celo.org",
-      accounts,
-      chainId: 42220,
-      live: true,
-      saveDeployments: true,
-    },
   },
   paths: {
     artifacts: "artifacts",
@@ -284,8 +277,17 @@ const config: HardhatUserConfig = {
   preprocess: {
     eachLine: removeConsoleLog((bre) => bre.network.name !== "hardhat" && bre.network.name !== "localhost"),
   },
-  solidity: {
+   solidity: {
     compilers: [
+      {
+        version: "0.8.6",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
       {
         version: "0.6.12",
         settings: {
@@ -295,7 +297,7 @@ const config: HardhatUserConfig = {
           },
         },
       },
-    ],
+    ]
   },
   spdxLicenseIdentifier: {
     overwrite: false,
